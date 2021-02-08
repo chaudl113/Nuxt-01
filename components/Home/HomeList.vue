@@ -87,6 +87,7 @@ export default {
   }
 }
 .card-content {
+  color: #000;
   padding: 1rem;
   h3 {
     font-size: 17px;

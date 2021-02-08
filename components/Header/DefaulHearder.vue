@@ -12,20 +12,32 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div id="navbarTogglerDemo01" class="collapse navbar-collapse">
-        <a class="navbar-brand font-weight-bold" href="#">Hidden brand</a>
+      <div
+        id="navbarTogglerDemo01"
+        class="collapse navbar-collapse text-center"
+      >
+        <div class="navbar-brand font-weight-bold ml-3">Hidden brand</div>
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
           <li class="nav-item">
-            <NuxtLink to="/">Home</NuxtLink>
+            <NuxtLink to="/"
+              ><font-awesome-icon :icon="['fas', 'home']" /> Home</NuxtLink
+            >
           </li>
           <li class="nav-item">
-            <NuxtLink to="/decks">Deck</NuxtLink>
+            <NuxtLink to="/decks"
+              ><font-awesome-icon :icon="['fab', 'leanpub']" /> Deck</NuxtLink
+            >
           </li>
           <li class="nav-item">
-            <NuxtLink to="/profile">Profile</NuxtLink>
+            <NuxtLink to="/profile"
+              ><font-awesome-icon :icon="['fas', 'id-card']" />
+              Profile</NuxtLink
+            >
           </li>
           <li class="nav-item">
-            <NuxtLink to="/settings">Settings</NuxtLink>
+            <NuxtLink to="/settings"
+              ><font-awesome-icon :icon="['fas', 'cog']" /> Settings</NuxtLink
+            >
           </li>
         </ul>
       </div>
@@ -37,25 +49,26 @@ export default {}
 </script>
 <style lang="scss" scoped>
 .header {
-  border-radius: 25px 0 25px 0;
-  overflow: hidden;
-  background-color: #f1f1f1;
-  padding: 20px 10px;
+  margin-bottom: 25px;
+  background: #394264;
+  border-radius: 5px;
+  height: 80px;
 }
 
 .header a {
   float: left;
-  color: black;
+  color: #fff;
   text-align: center;
   padding: 12px;
   text-decoration: none;
   font-size: 18px;
-  line-height: 25px;
-  border-radius: 4px;
-  margin-right: 10px;
-  &:last-child {
-    margin-right: 0;
+  line-height: 52px;
+  svg {
+    color: #9099b7;
   }
+}
+.navbar {
+  padding: 0;
 }
 
 .header a.logo {
@@ -64,23 +77,26 @@ export default {}
 }
 
 .header a:hover {
-  background-color: #ddd;
-  color: black;
+  background: #50597b;
+  border-bottom: 4px solid #11a8ab;
+  text-decoration: none;
+  &:last-child {
+    border-radius: 5px;
+  }
 }
-.header:hover {
-  border-radius: 0 25px 0 25px;
-  transition: 0.3s ease-in-out;
-}
+
 .nuxt-link-exact-active {
-  background-color: dodgerblue !important;
-  color: white !important;
+  // background-color: dodgerblue !important;
+  // color: white !important;
+  border-bottom: 4px solid #11a8ab;
+  text-decoration: none;
 }
 
 .header-right {
   float: right;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 1000px) {
   .header a {
     float: none;
     display: block;
@@ -90,9 +106,15 @@ export default {}
   .header-right {
     float: none;
   }
-}
-.nav-item {
-  list-style: none;
-  margin-right: 10px;
+  .navbar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1rem;
+    z-index: 999;
+    background: #394264;
+  }
 }
 </style>

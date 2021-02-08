@@ -74,5 +74,10 @@ export default {
   .modal__mask {
     width: 50%;
   }
+  @media only screen and (max-width: 600px) {
+    .modal__mask {
+      width: 90%;
+    }
+  }
 }
 </style>

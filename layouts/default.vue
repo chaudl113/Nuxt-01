@@ -32,12 +32,13 @@ html {
 }
 
 body {
-  color: #272727;
+  color: #fff;
   font-family: 'Quicksand', serif;
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0;
   padding: 1rem;
+  background-color: #1f253d;
 }
 
 *,

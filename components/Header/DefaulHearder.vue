@@ -1,13 +1,35 @@
 <template>
   <div class="header">
-    <a class="logo">CompanyLogo</a>
-    <div class="header-right">
-      <NuxtLink to="/">Home</NuxtLink>
-      <NuxtLink to="/decks">Deck</NuxtLink>
-
-      <NuxtLink to="/profile">Profile</NuxtLink>
-      <NuxtLink to="/settings">Settings</NuxtLink>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarTogglerDemo01"
+        aria-controls="navbarTogglerDemo01"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navbarTogglerDemo01" class="collapse navbar-collapse">
+        <a class="navbar-brand font-weight-bold" href="#">Hidden brand</a>
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <NuxtLink to="/">Home</NuxtLink>
+          </li>
+          <li class="nav-item">
+            <NuxtLink to="/decks">Deck</NuxtLink>
+          </li>
+          <li class="nav-item">
+            <NuxtLink to="/profile">Profile</NuxtLink>
+          </li>
+          <li class="nav-item">
+            <NuxtLink to="/settings">Settings</NuxtLink>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </div>
 </template>
 <script>
@@ -15,6 +37,7 @@ export default {}
 </script>
 <style lang="scss" scoped>
 .header {
+  border-radius: 25px 0 25px 0;
   overflow: hidden;
   background-color: #f1f1f1;
   padding: 20px 10px;
@@ -44,7 +67,10 @@ export default {}
   background-color: #ddd;
   color: black;
 }
-
+.header:hover {
+  border-radius: 0 25px 0 25px;
+  transition: 0.3s ease-in-out;
+}
 .nuxt-link-exact-active {
   background-color: dodgerblue !important;
   color: white !important;
@@ -65,7 +91,8 @@ export default {}
     float: none;
   }
 }
-li {
+.nav-item {
   list-style: none;
+  margin-right: 10px;
 }
 </style>

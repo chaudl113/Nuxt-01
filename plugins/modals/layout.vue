@@ -38,13 +38,41 @@ export default {
         this.show()
       }
     })
+    VModal.EventBus.$on('close', (params) => {
+      if (this.name === params.name) {
+        this.close()
+      }
+    })
   },
   methods: {
     show() {
       this.visible = true
     },
+    close() {
+      this.visible = false
+    },
   },
 }
 </script>
 
-<style></style>
+<style lang="scss">
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: unset;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  // align-items: center;
+  justify-content: center;
+  background-color: rgba(18, 18, 18, 0.8);
+  z-index: 999;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  .modal__mask {
+    width: 50%;
+  }
+}
+</style>

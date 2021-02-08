@@ -1,124 +1,127 @@
 <template>
   <div>
     <div class="container pt-5">
-      <h1>List of your decks</h1>
+      <div class="clearfix pr-3">
+        <h1>List of your decks</h1>
+        <button
+          type="button"
+          class="btn btn-primary float-right"
+          @click.prevent="openModal"
+        >
+          Create a Deck
+        </button>
+      </div>
       <ul class="cards">
-        <li class="cards_item">
-          <nuxt-link to="/decks/1">
-            <div class="card">
-              <div class="card_image">
-                <img src="https://picsum.photos/500/300/?image=10" />
-              </div>
-              <div class="card_content">
-                <h2 class="card_title">Card Grid Layout</h2>
-                <p class="card_text">
-                  Demo of pixel perfect pure CSS simple responsive card grid
-                  layout
-                </p>
-                <button class="btn card_btn">Read More</button>
-              </div>
-            </div>
-          </nuxt-link>
-        </li>
-        <li class="cards_item">
-          <div class="card">
-            <div class="card_image">
-              <img src="https://picsum.photos/500/300/?image=5" />
-            </div>
-            <div class="card_content">
-              <h2 class="card_title">Card Grid Layout</h2>
-              <p class="card_text">
-                Demo of pixel perfect pure CSS simple responsive card grid
-                layout
-              </p>
-              <nuxt-link tag="button" to="/decks/2" class="btn card_btn"
-                >Read More</nuxt-link
-              >
-            </div>
-          </div>
-        </li>
-        <li class="cards_item">
-          <div class="card">
-            <div class="card_image">
-              <img src="https://picsum.photos/500/300/?image=11" />
-            </div>
-            <div class="card_content">
-              <h2 class="card_title">Card Grid Layout</h2>
-              <p class="card_text">
-                Demo of pixel perfect pure CSS simple responsive card grid
-                layout
-              </p>
-              <nuxt-link tag="button" to="/decks/2" class="btn card_btn"
-                >Read More</nuxt-link
-              >
-            </div>
-          </div>
-        </li>
-        <li class="cards_item">
-          <div class="card">
-            <div class="card_image">
-              <img src="https://picsum.photos/500/300/?image=14" />
-            </div>
-            <div class="card_content">
-              <h2 class="card_title">Card Grid Layout</h2>
-              <p class="card_text">
-                Demo of pixel perfect pure CSS simple responsive card grid
-                layout
-              </p>
-              <nuxt-link tag="button" to="/decks/2" class="btn card_btn"
-                >Read More</nuxt-link
-              >
-            </div>
-          </div>
-        </li>
-        <li class="cards_item">
-          <div class="card">
-            <div class="card_image">
-              <img src="https://picsum.photos/500/300/?image=17" />
-            </div>
-            <div class="card_content">
-              <h2 class="card_title">Card Grid Layout</h2>
-              <p class="card_text">
-                Demo of pixel perfect pure CSS simple responsive card grid
-                layout
-              </p>
-              <nuxt-link tag="button" to="/decks/2" class="btn card_btn"
-                >Read More</nuxt-link
-              >
-            </div>
-          </div>
-        </li>
-        <li class="cards_item">
-          <div class="card">
-            <div class="card_image">
-              <img src="https://picsum.photos/500/300/?image=2" />
-            </div>
-            <div class="card_content">
-              <h2 class="card_title">Card Grid Layout</h2>
-              <p class="card_text">
-                Demo of pixel perfect pure CSS simple responsive card grid
-                layout
-              </p>
-              <nuxt-link tag="button" to="/decks/2" class="btn card_btn"
-                >Read More</nuxt-link
-              >
-            </div>
-          </div>
-        </li>
+        <DeckList
+          v-for="deck in decks"
+          :id="deck._id"
+          :key="deck._id"
+          :name="deck.name"
+          :description="deck.description"
+          :thumbnail="deck.thumbnail"
+        />
       </ul>
     </div>
+    <!-- modal -->
+    <v-modal name="createDeckModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="exampleModalLongTitle" class="modal-title">
+            Create A New Deck
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            @click.prevent="closeModal"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="name">Name: </label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Please enter name deck"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="description">Description: </label>
+              <textarea
+                id="description"
+                class="form-control"
+                rows="3"
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label for="file">Image: </label>
+              <input id="file" type="file" class="form-control-file" />
+              <div class="preview"></div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+            @click.prevent="closeModal"
+          >
+            Close
+          </button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </v-modal>
   </div>
 </template>
 <script>
+import DeckList from '@/components/Decks/DeckList.vue'
 export default {
+  components: {
+    DeckList,
+  },
   data() {
     return {
-      deckID: '1',
+      decks: [
+        {
+          _id: 1,
+          name: 'Learn English',
+          description:
+            'Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Mauris blandit aliquet elit. ',
+          thumbnail: 'https://picsum.photos/500/300/?image=10',
+        },
+        {
+          _id: 2,
+          name: 'Learn Chinese',
+          description:
+            'Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Mauris blandit aliquet elit. ',
+          thumbnail: 'https://picsum.photos/500/300/?image=11',
+        },
+        {
+          _id: 3,
+          name: 'Learn Japanese',
+          description:
+            'Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Mauris blandit aliquet elit. ',
+          thumbnail: 'https://picsum.photos/500/300/?image=12',
+        },
+      ],
     }
   },
   methods: {
     showDeck() {
       this.$router.push('/decks/' + this.deckID)
+    },
+    openModal() {
+      this.$modal.open({ name: 'createDeckModal' })
+    },
+    closeModal() {
+      this.$modal.close({ name: 'createDeckModal' })
     },
   },
 }
@@ -143,7 +146,7 @@ img {
   vertical-align: middle;
 }
 
-.btn {
+.card_btn {
   color: #fff;
   padding: 0.8rem;
   font-size: 14px;
@@ -157,7 +160,7 @@ img {
   background: transparent;
 }
 
-.btn:hover {
+.card_btn:hover {
   background-color: rgba(255, 255, 255, 0.12);
 }
 
@@ -167,53 +170,5 @@ img {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-
-.cards_item {
-  display: flex;
-  padding: 1rem;
-}
-
-@media (min-width: 40rem) {
-  .cards_item {
-    width: 50%;
-  }
-}
-
-@media (min-width: 56rem) {
-  .cards_item {
-    width: 33.3333%;
-  }
-}
-
-.card {
-  background-color: white;
-  border-radius: 0.25rem;
-  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.card_content {
-  padding: 1rem;
-  background: linear-gradient(to bottom left, #57bdbd 40%, #d58fdf 100%);
-}
-
-.card_title {
-  color: #fff;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: capitalize;
-  margin: 0;
-}
-
-.card_text {
-  color: #fff;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  margin-bottom: 1.25rem;
-  font-weight: 400;
 }
 </style>

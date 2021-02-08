@@ -37,7 +37,7 @@ body {
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0;
-  padding: 1rem;
+  padding: 3rem 1rem 1rem 1rem;
   background-color: #1f253d;
 }
 

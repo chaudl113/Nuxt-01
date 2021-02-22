@@ -14,70 +14,14 @@
       <ul class="cards">
         <DeckList
           v-for="deck in decks"
-          :id="deck._id"
-          :key="deck._id"
+          :id="deck.id"
+          :key="deck.id"
           :name="deck.name"
           :description="deck.description"
           :thumbnail="deck.thumbnail"
         />
       </ul>
     </div>
-    <!-- modal -->
-    <v-modal name="createDeckModal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 id="exampleModalLongTitle" class="modal-title">
-            Create A New Deck
-          </h5>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-            @click.prevent="closeModal"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="name">Name: </label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Please enter name deck"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="description">Description: </label>
-              <textarea
-                id="description"
-                class="form-control"
-                rows="3"
-              ></textarea>
-            </div>
-            <div class="form-group">
-              <label for="file">Image: </label>
-              <input id="file" type="file" class="form-control-file" />
-              <div class="preview"></div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-dismiss="modal"
-            @click.prevent="closeModal"
-          >
-            Close
-          </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </v-modal>
   </div>
 </template>
 <script>
@@ -87,58 +31,24 @@ export default {
   components: {
     DeckList,
   },
-  asyncData(context) {
+  computed: {
+    decks() {
+      return this.$store.getters.decks
+    },
+  },
+
+  created() {
+    this.$store.dispatch('setDecks', this.decks)
     // eslint-disable-next-line no-console
-    console.log(context)
-    return new Promise((resolve, reject) => {
-      // eslint-disable-next-line nuxt/no-timing-in-fetch-data
-      setTimeout(() => {
-        resolve({
-          decks: [
-            {
-              _id: 1,
-              name: 'Learn English',
-              description:
-                'Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Mauris blandit aliquet elit. ',
-              thumbnail: 'https://picsum.photos/500/300/?image=10',
-            },
-            {
-              _id: 2,
-              name: 'Learn Chinese',
-              description:
-                'Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Mauris blandit aliquet elit. ',
-              thumbnail: 'https://picsum.photos/500/300/?image=11',
-            },
-            {
-              _id: 3,
-              name: 'Learn Japanese',
-              description:
-                'Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Mauris blandit aliquet elit. ',
-              thumbnail: 'https://picsum.photos/500/300/?image=12',
-            },
-          ],
-        })
-      }, 1500)
-    })
-      .then((data) => {
-        // eslint-disable-next-line no-console
-        console.log(data)
-        return data
-      })
-      .catch((err) => {
-        context.error(err)
-      })
+    // console.log(this.$store.getters.decks)
   },
 
   methods: {
-    showDeck() {
-      this.$router.push('/decks/' + this.deckID)
-    },
     openModal() {
-      this.$modal.open({ name: 'createDeckModal' })
+      this.$modal.open({ name: 'DeckFormModal' })
     },
     closeModal() {
-      this.$modal.close({ name: 'createDeckModal' })
+      this.$modal.close({ name: 'DeckFormModal' })
     },
   },
 }

@@ -2,15 +2,22 @@
   <section>
     <div class="container pt-5">
       <div class="text-center">
-        <h3>Deck #{{ $route.params.id }}: Lean English</h3>
+        <h3>Deck : {{ deck.name }}</h3>
         <div>
           <button type="button" class="btn btn-success">Start Now</button>
           <button
             type="button"
             class="btn btn-primary"
-            @click.prevent="openModal"
+            @click.prevent="openModal('createCardModal')"
           >
             Create a card
+          </button>
+          <button
+            type="button"
+            class="btn btn-warning"
+            @click.prevent="openModal('DeckFormModal')"
+          >
+            Edit a Deck
           </button>
         </div>
       </div>
@@ -39,7 +46,7 @@
             class="close"
             data-dismiss="modal"
             aria-label="Close"
-            @click.prevent="closeModal"
+            @click.prevent="closeModal('createCardModal')"
           >
             <span aria-hidden="true">&times;</span>
           </button>
@@ -68,18 +75,20 @@
               <input id="file" type="file" class="form-control-file" />
               <div class="preview"></div>
             </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+                @click.prevent="closeModal('createCardModal')"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-dismiss="modal"
-            @click.prevent="closeModal"
-          >
-            Close
-          </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </v-modal>
@@ -87,6 +96,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 import CardList from '@/components/Cards/CardList.vue'
 
 export default {
@@ -94,55 +105,66 @@ export default {
     CardList,
   },
   asyncData(context) {
-    // eslint-disable-next-line no-console
-    console.log(context)
-    return new Promise((resolve, reject) => {
-      // eslint-disable-next-line nuxt/no-timing-in-fetch-data
-      setTimeout(() => {
-        resolve({
-          cards: [
-            {
-              _id: 1,
-              picture:
-                'https://scr.vn/wp-content/uploads/2020/08/%E1%BA%A2nh-hot-girl-l%C3%A0m-avt.jpg',
-              keyword: 'beautiful girl',
-            },
-            {
-              _id: 2,
-              picture:
-                'https://scr.vn/wp-content/uploads/2020/08/H%C3%ACnh-g%C3%A1i-xinh-t%C3%B3c-ng%E1%BA%AFn-che-m%E1%BA%B7t.jpg',
-              keyword: 'beautiful girl',
-            },
-            {
-              _id: 3,
-              picture:
-                'https://scr.vn/wp-content/uploads/2020/08/H%C3%ACnh-n%E1%BB%81n-%C4%91i%E1%BB%87n-tho%E1%BA%A1i-girl-xinh-682x1024.jpg',
-              keyword: 'beautiful girl',
-            },
-            {
-              _id: 4,
-              picture:
-                'https://scr.vn/wp-content/uploads/2020/08/H%C3%ACnh-%E1%BA%A3nh-g%C3%A1i-%C4%91%E1%BA%B9p.jpg',
-              keyword: 'beautiful girl',
-            },
-          ],
-        })
-      }, 1500)
-    })
-      .then((data) => {
-        return data
+    return axios
+      .get(
+        `https://nuxt-learning-english-bb51c-default-rtdb.firebaseio.com/decks/${context.params.id}.json`
+      )
+      .then((response) => {
+        return {
+          deck: response.data,
+        }
       })
-      .catch((err) => {
-        context.error(err)
+      .catch((e) => {
+        context.error(e)
       })
   },
-
+  data() {
+    return {
+      cards: [
+        {
+          _id: 1,
+          picture:
+            'https://scr.vn/wp-content/uploads/2020/08/%E1%BA%A2nh-hot-girl-l%C3%A0m-avt.jpg',
+          keyword: 'beautiful girl',
+        },
+        {
+          _id: 2,
+          picture:
+            'https://scr.vn/wp-content/uploads/2020/08/H%C3%ACnh-g%C3%A1i-xinh-t%C3%B3c-ng%E1%BA%AFn-che-m%E1%BA%B7t.jpg',
+          keyword: 'beautiful girl',
+        },
+        {
+          _id: 3,
+          picture:
+            'https://scr.vn/wp-content/uploads/2020/08/H%C3%ACnh-n%E1%BB%81n-%C4%91i%E1%BB%87n-tho%E1%BA%A1i-girl-xinh-682x1024.jpg',
+          keyword: 'beautiful girl',
+        },
+        {
+          _id: 4,
+          picture:
+            'https://scr.vn/wp-content/uploads/2020/08/H%C3%ACnh-%E1%BA%A3nh-g%C3%A1i-%C4%91%E1%BA%B9p.jpg',
+          keyword: 'beautiful girl',
+        },
+      ],
+    }
+  },
   methods: {
-    openModal() {
-      this.$modal.open({ name: 'createCardModal' })
+    openModal(name) {
+      if (name === 'createCardModal') {
+        this.$modal.open({ name: 'createCardModal' })
+      } else if (name === 'DeckFormModal') {
+        this.$modal.open({
+          name: 'DeckFormModal',
+          payload: { ...this.deck, id: this.$route.params.id },
+        })
+      }
     },
-    closeModal() {
-      this.$modal.close({ name: 'createCardModal' })
+    closeModal(name) {
+      if (name === 'createCardModal') {
+        this.$modal.close({ name: 'createCardModal' })
+      } else if (name === 'DeckFormModal') {
+        this.$modal.close({ name: 'DeckFormModal' })
+      }
     },
   },
 }

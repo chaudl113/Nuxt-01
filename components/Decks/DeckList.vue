@@ -3,7 +3,9 @@
     <nuxt-link :to="`/decks/${id}`">
       <div class="card">
         <div class="card_image">
-          <img :src="thumbnail" :alt="`Thumbnail of ${name}`" />
+          <div class="img">
+            <img :src="thumbnail" :alt="`Thumbnail of ${name}`" />
+          </div>
         </div>
         <div class="card_content">
           <h2 class="card_title">{{ name }}</h2>
@@ -29,7 +31,7 @@ export default {
       required: true,
     },
     id: {
-      type: Number,
+      type: String,
       required: true,
     },
   },

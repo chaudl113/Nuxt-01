@@ -34,18 +34,20 @@ export default {
   },
   beforeMount() {
     VModal.EventBus.$on('open', (params) => {
+      // eslint-disable-next-line no-console
       if (this.name === params.name) {
-        this.show()
+        this.show(params)
       }
     })
     VModal.EventBus.$on('close', (params) => {
       if (this.name === params.name) {
-        this.close()
+        this.close(params)
       }
     })
   },
   methods: {
-    show() {
+    show(params) {
+      this.payload = params.payload
       this.visible = true
     },
     close() {

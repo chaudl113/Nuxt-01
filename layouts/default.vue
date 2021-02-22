@@ -2,10 +2,37 @@
   <div>
     <DefaulHearder />
     <Nuxt />
+    <!-- modal -->
+    <v-modal v-slot="payload" name="DeckFormModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="exampleModalLongTitle" class="modal-title">
+            {{
+              payload && payload.payload ? 'Edit a Deck' : 'Create a new Deck'
+            }}
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            @click.prevent="closeModal"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <DeckForm :deck="payload.payload" @submit="onSubmit" />
+        </div>
+      </div>
+    </v-modal>
     <DefaulFooter />
   </div>
 </template>
 <script>
+import axios from 'axios'
+
+import DeckForm from '@/components/Decks/DeckForm.vue'
 import DefaulHearder from '@/components/Header/DefaulHearder.vue'
 import DefaulFooter from '@/components/Footer/DefaulFooter.vue'
 
@@ -13,6 +40,24 @@ export default {
   components: {
     DefaulHearder,
     DefaulFooter,
+    DeckForm,
+  },
+  methods: {
+    onSubmit(deckData) {
+      if (deckData && !deckData.id) {
+        this.$store
+          .dispatch('addDeck', deckData)
+          .then(() => this.$modal.close({ name: 'DeckFormModal' }))
+      } else {
+        this.$store.dispatch('editDeck', deckData).then(() => {
+          this.$modal.close({ name: 'DeckFormModal' })
+          this.$router.push('/decks')
+        })
+      }
+    },
+    closeModal() {
+      this.$modal.close({ name: 'DeckFormModal' })
+    },
   },
 }
 </script>

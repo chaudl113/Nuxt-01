@@ -82,37 +82,54 @@
 </template>
 <script>
 import DeckList from '@/components/Decks/DeckList.vue'
+
 export default {
   components: {
     DeckList,
   },
-  data() {
-    return {
-      decks: [
-        {
-          _id: 1,
-          name: 'Learn English',
-          description:
-            'Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Mauris blandit aliquet elit. ',
-          thumbnail: 'https://picsum.photos/500/300/?image=10',
-        },
-        {
-          _id: 2,
-          name: 'Learn Chinese',
-          description:
-            'Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Mauris blandit aliquet elit. ',
-          thumbnail: 'https://picsum.photos/500/300/?image=11',
-        },
-        {
-          _id: 3,
-          name: 'Learn Japanese',
-          description:
-            'Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Mauris blandit aliquet elit. ',
-          thumbnail: 'https://picsum.photos/500/300/?image=12',
-        },
-      ],
-    }
+  asyncData(context) {
+    // eslint-disable-next-line no-console
+    console.log(context)
+    return new Promise((resolve, reject) => {
+      // eslint-disable-next-line nuxt/no-timing-in-fetch-data
+      setTimeout(() => {
+        resolve({
+          decks: [
+            {
+              _id: 1,
+              name: 'Learn English',
+              description:
+                'Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Mauris blandit aliquet elit. ',
+              thumbnail: 'https://picsum.photos/500/300/?image=10',
+            },
+            {
+              _id: 2,
+              name: 'Learn Chinese',
+              description:
+                'Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Mauris blandit aliquet elit. ',
+              thumbnail: 'https://picsum.photos/500/300/?image=11',
+            },
+            {
+              _id: 3,
+              name: 'Learn Japanese',
+              description:
+                'Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Mauris blandit aliquet elit. ',
+              thumbnail: 'https://picsum.photos/500/300/?image=12',
+            },
+          ],
+        })
+      }, 1500)
+    })
+      .then((data) => {
+        // eslint-disable-next-line no-console
+        console.log(data)
+        return data
+      })
+      .catch((err) => {
+        context.error(err)
+      })
   },
+
   methods: {
     showDeck() {
       this.$router.push('/decks/' + this.deckID)

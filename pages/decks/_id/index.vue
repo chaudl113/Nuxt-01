@@ -93,36 +93,50 @@ export default {
   components: {
     CardList,
   },
-  data() {
-    return {
-      cards: [
-        {
-          _id: 1,
-          picture:
-            'https://scr.vn/wp-content/uploads/2020/08/%E1%BA%A2nh-hot-girl-l%C3%A0m-avt.jpg',
-          keyword: 'beautiful girl',
-        },
-        {
-          _id: 2,
-          picture:
-            'https://scr.vn/wp-content/uploads/2020/08/H%C3%ACnh-g%C3%A1i-xinh-t%C3%B3c-ng%E1%BA%AFn-che-m%E1%BA%B7t.jpg',
-          keyword: 'beautiful girl',
-        },
-        {
-          _id: 3,
-          picture:
-            'https://scr.vn/wp-content/uploads/2020/08/H%C3%ACnh-n%E1%BB%81n-%C4%91i%E1%BB%87n-tho%E1%BA%A1i-girl-xinh-682x1024.jpg',
-          keyword: 'beautiful girl',
-        },
-        {
-          _id: 4,
-          picture:
-            'https://scr.vn/wp-content/uploads/2020/08/H%C3%ACnh-%E1%BA%A3nh-g%C3%A1i-%C4%91%E1%BA%B9p.jpg',
-          keyword: 'beautiful girl',
-        },
-      ],
-    }
+  asyncData(context) {
+    // eslint-disable-next-line no-console
+    console.log(context)
+    return new Promise((resolve, reject) => {
+      // eslint-disable-next-line nuxt/no-timing-in-fetch-data
+      setTimeout(() => {
+        resolve({
+          cards: [
+            {
+              _id: 1,
+              picture:
+                'https://scr.vn/wp-content/uploads/2020/08/%E1%BA%A2nh-hot-girl-l%C3%A0m-avt.jpg',
+              keyword: 'beautiful girl',
+            },
+            {
+              _id: 2,
+              picture:
+                'https://scr.vn/wp-content/uploads/2020/08/H%C3%ACnh-g%C3%A1i-xinh-t%C3%B3c-ng%E1%BA%AFn-che-m%E1%BA%B7t.jpg',
+              keyword: 'beautiful girl',
+            },
+            {
+              _id: 3,
+              picture:
+                'https://scr.vn/wp-content/uploads/2020/08/H%C3%ACnh-n%E1%BB%81n-%C4%91i%E1%BB%87n-tho%E1%BA%A1i-girl-xinh-682x1024.jpg',
+              keyword: 'beautiful girl',
+            },
+            {
+              _id: 4,
+              picture:
+                'https://scr.vn/wp-content/uploads/2020/08/H%C3%ACnh-%E1%BA%A3nh-g%C3%A1i-%C4%91%E1%BA%B9p.jpg',
+              keyword: 'beautiful girl',
+            },
+          ],
+        })
+      }, 1500)
+    })
+      .then((data) => {
+        return data
+      })
+      .catch((err) => {
+        context.error(err)
+      })
   },
+
   methods: {
     openModal() {
       this.$modal.open({ name: 'createCardModal' })

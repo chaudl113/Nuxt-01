@@ -42,7 +42,6 @@ body {
 #notfound {
   position: relative;
   height: 100vh;
-  width: 100vw;
   background: #030005;
   overflow: hidden;
 }

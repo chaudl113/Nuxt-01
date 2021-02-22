@@ -68,6 +68,7 @@ export default {
   // align-items: center;
   justify-content: center;
   background-color: rgba(18, 18, 18, 0.8);
+  color: #333;
   z-index: 999;
   padding-top: 20px;
   padding-bottom: 10px;
